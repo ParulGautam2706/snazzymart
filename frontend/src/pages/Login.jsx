@@ -12,6 +12,7 @@ import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../utils/Firebase';
 import { userDataContext } from '../context/UserContext';
 import Loading from '../component/Loading';
+import { toast } from 'react-toastify';
 
 function Login() {
     let [show,setShow] = useState(false)
@@ -24,23 +25,24 @@ function Login() {
     let navigate = useNavigate()
 
     const handleLogin = async (e) => {
-        setLoading(true)
-        e.preventDefault()
-        try {
-            let result = await axios.post(serverUrl + '/api/auth/login',{
-                email,password
-            },{withCredentials:true})
-            console.log(result.data)
-            setLoading(false)
-            getCurrentUser()
-            navigate("/")
-            toast.success("User Login Successful")
-            
-        } catch (error) {
-            console.log(error)
-            toast.error("User Login Failed")
-        }
+    setLoading(true)
+    e.preventDefault()
+    try {
+        let result = await axios.post(serverUrl + '/api/auth/login', {
+            email, password
+        }, { withCredentials: true })
+        console.log(result.data)
+        await getCurrentUser()   // ← await added
+        navigate("/")
+        toast.success("User Login Successful")  // ← moved after navigate
+        setLoading(false)
+    } catch (error) {
+        console.log(error)
+        toast.error("User Login Failed")
+        setLoading(false)   // ← also set false on error
     }
+}
+
      const googlelogin = async () => {
             try {
                 const response = await signInWithPopup(auth , provider)
@@ -50,8 +52,9 @@ function Login() {
     
                 const result = await axios.post(serverUrl + "/api/auth/googlelogin" ,{name , email} , {withCredentials:true})
                 console.log(result.data)
-                getCurrentUser()
-            navigate("/")
+                //wait for user state to update first
+                await getCurrentUser()
+                navigate("/")
     
             } catch (error) {
                 console.log(error)

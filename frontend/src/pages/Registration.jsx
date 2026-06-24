@@ -26,23 +26,23 @@ function Registration() {
     let navigate = useNavigate()
 
     const handleSignup = async (e) => {
-        setLoading(true)
-        e.preventDefault()
-        try {
-         const result = await axios.post(serverUrl + '/api/auth/registration',{
-            name,email,password
-         },{withCredentials:true})
-            getCurrentUser()
-            navigate("/")
-            toast.success("User Registration Successful")
-            console.log(result.data)
-            setLoading(false)
-
-        } catch (error) {
-            console.log(error)
-            toast.error("User Registration Failed")
-        }
+    setLoading(true)
+    e.preventDefault()
+    try {
+        const result = await axios.post(serverUrl + '/api/auth/registration', {
+            name, email, password
+        }, { withCredentials: true })
+        console.log(result.data)
+        await getCurrentUser()   // ← await added
+        navigate("/")
+        toast.success("User Registration Successful")
+        setLoading(false)
+    } catch (error) {
+        console.log(error)
+        toast.error("User Registration Failed")
+        setLoading(false)   // ← also set false on error
     }
+}
 
     const googleSignup = async () => {
         try {
