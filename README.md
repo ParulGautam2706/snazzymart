@@ -193,12 +193,10 @@ This project is licensed under the MIT License.
 ## 👩‍💻 Author
 
 **Santosh Gautam**
-- GitHub: []
-- LinkedIn: []
+- GitHub: [https://github.com/ParulGautam2706/snazzymart]
 
 **Sahil Kaushik**
-- GitHub: []
-- LinkedIn: []
+- GitHub: [https://github.com/sahilkaushik27/snazzymart]
 
 ---
 
