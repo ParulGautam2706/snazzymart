@@ -12,7 +12,9 @@ A full-featured e-commerce web application built with the MERN stack, offering a
 
 ## 📸 Screenshots
 
-> Add screenshots of your project here
+>## Homepage
+
+![Homepage](ShopEase.png)
 
 ---
 
