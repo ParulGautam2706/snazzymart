@@ -24,7 +24,7 @@ app.use(
     origin: [
       'http://localhost:5173',
       'http://localhost:5174',
-      'https://shopease-010.netlify.app'
+      'https://snazzymart-im1.netlify.app'
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
