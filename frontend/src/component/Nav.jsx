@@ -9,28 +9,20 @@ import { useNavigate } from 'react-router-dom';
 import { IoMdHome } from "react-icons/io";
 import { HiOutlineCollection } from "react-icons/hi";
 import { MdContacts } from "react-icons/md";
-import axios from 'axios';
-import { authDataContext } from '../context/AuthContext';
 import { shopDataContext } from '../context/ShopContext';
 
 function Nav() {
-    let { getCurrentUser, userData, setUserData } = useContext(userDataContext);
-    let { serverUrl } = useContext(authDataContext);
+    let { userData, setUserData } = useContext(userDataContext);
     let { showSearch, setShowSearch, search, setSearch, getCartCount } = useContext(shopDataContext);
     let [showProfile, setShowProfile] = useState(false);
     let navigate = useNavigate();
 
-    const handleLogout = async () => {
-        try {
-            await axios.get(serverUrl + "/api/auth/logout", { withCredentials: true });
-
-            // ✅ THIS FIXES YOUR LOGIN/LOGOUT ISSUE
-            setUserData(null);
-
-            navigate("/login");
-        } catch (error) {
-            console.log(error);
-        }
+    const handleLogout = () => {
+        // Clear token from localStorage and reset user state
+        localStorage.removeItem("token");
+        setUserData(null);
+        setShowProfile(false);
+        navigate("/login");
     };
 
     return (
@@ -107,10 +99,7 @@ function Nav() {
                         {userData && (
                             <li
                                 className='w-[100%] hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer'
-                                onClick={() => {
-                                    handleLogout();
-                                    setShowProfile(false);
-                                }}
+                                onClick={handleLogout}
                             >
                                 LogOut
                             </li>
