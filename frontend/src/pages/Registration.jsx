@@ -25,22 +25,29 @@ function Registration() {
 
     let navigate = useNavigate()
 
-    const handleSignup = async (e) => {
+   const handleSignup = async (e) => {
     setLoading(true)
     e.preventDefault()
     try {
         const result = await axios.post(serverUrl + '/api/auth/registration', {
             name, email, password
         }, { withCredentials: true })
+        
         console.log(result.data)
-        await getCurrentUser()   // ← await added
+        
+        // Store token if backend returns it
+        if(result.data.token) {
+            localStorage.setItem('token', result.data.token)
+        }
+        
+        await getCurrentUser()
         navigate("/")
         toast.success("User Registration Successful")
         setLoading(false)
     } catch (error) {
-        console.log(error)
+        console.log(error.response?.data)
         toast.error("User Registration Failed")
-        setLoading(false)   // ← also set false on error
+        setLoading(false)
     }
 }
 
