@@ -6,7 +6,7 @@ A full-featured e-commerce web application built with the MERN stack, offering a
 
 ## 🚀 Live Demo
 
-> [Add your deployed link here — e.g. https://snazzymart.onrender.com]
+> 
 
 ---
 
